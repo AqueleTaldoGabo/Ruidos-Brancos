@@ -1,3 +1,5 @@
+#pragma once
+
 #include <raylib.h>
 
 typedef struct animation{
@@ -18,6 +20,17 @@ Rectangle animation_frame(animation *anima, int num_frames){
         .y = y,
         .width = 16,
         .height = 16
+    };
+}
+Rectangle animation_frame2(animation *anima, int num_frames){
+    float x = (anima->cur % num_frames) * 128;
+    float y = (anima->cur / num_frames) * 128;
+
+    return (Rectangle){
+        .x = x,
+        .y = y,
+        .width = 128,
+        .height = 128
     };
 }
 

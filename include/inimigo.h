@@ -31,24 +31,25 @@ inimig *listaCombos(inimig *inim){
         case 0:
             tiro = NULL;
             for(int i = 0; i<rand()%5+1; i++){
-                tiro = criaBala(inim->x, inim->y-100, tiro, 0+i, -6+i);
+                tiro = criaBala(inim->x-130, inim->y-90, tiro, 0+i, -6+i);
             }
             inim->combo[0].tir = tiro;
             break;
         case 1:
             tiro = NULL;
             for(int i = 0; i<rand()%5+1; i++){
-                tiro = criaBala(inim->x, inim->y+100, tiro, 0-i, -6+i);
+                tiro = criaBala(inim->x-130, inim->y+90, tiro, 0-i, -6+i);
             }
             inim->combo[0].tir = tiro;
             break;
         case 2:
             tiro = NULL;
             for(int i = 0; i<rand()%5+1; i++){
-                if(rand()%2){
-                    tiro = criaBala(inim->x-100, inim->y+25*i, tiro, 0, -6);
+                int y = rand()%2;
+                if(y){
+                    tiro = criaBala(inim->x-130, inim->y+15+45*i, tiro, 0, -6);
                 }else{
-                    tiro = criaBala(inim->x-100, inim->y-25*i, tiro, 0, -6);
+                    tiro = criaBala(inim->x-130, inim->y-15-45*i, tiro, 0, -6);
                 }
             }
             inim->combo[0].tir = tiro;
@@ -61,7 +62,6 @@ inimig *updateInimigo(inimig *inim){
     if (clock() > inim->start_time + 2500){
         inim = listaCombos(inim);
         inim->start_time = clock();
-        cout << "CAARRROOO" << endl; 
     }
     return inim;
 }
@@ -79,7 +79,8 @@ void setInimigoY(float Y, inimig *inimigo){
     inimigo->y = Y;
 }
 
-void drawInimigo(inimig *inimigo){
-    DrawCircle(inimigo->x, inimigo->y, 100, BLUE);
+void drawInimigo(inimig *inimigo, Texture2D texture2d, animation anim, Texture2D text, animation ani){
+    DrawTexturePro(texture2d, animation_frame2(&anim, 5), {inimigo->x-90, inimigo->y-174, 400, 400}, {0, 0}, 0, WHITE);
+    DrawTexturePro(text, animation_frame2(&ani, 6), {inimigo->x-330, inimigo->y-204, 400, 400}, {0, 0}, 0, WHITE);
 }
 

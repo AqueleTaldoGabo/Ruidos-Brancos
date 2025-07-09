@@ -1,5 +1,6 @@
 #pragma once
 #include "raylib.h"
+#include "animation.h"
 #include <cstddef>
 
 #include <iostream>
@@ -62,19 +63,16 @@ tiroIni *updateBalaINI(tiroIni *tir, float x, float y, int *vida){
         l->x = l->x + l->speedX;
         l->y = l->y + l->speedY;
 
-        if(CheckCollisionCircles(Vector2 {l->x, l->y}, 10, Vector2{x, y}, 50)){
+        if(CheckCollisionCircles(Vector2 {l->x, l->y}, 10, Vector2{x, y}, 25)){
             *vida = *vida-1;
-            cout << *vida << endl;
             tir = deleteBala(tir, l);
             if(tir == NULL)
                 break;
-            cout << "vapo" << endl;
         }
         else if(l->x + 10 < 0){
             tir = deleteBala(tir, l);
             if(tir == NULL)
                 break;
-            cout << "vambora" << endl;
         }
         
         l = l->prox;
@@ -122,10 +120,10 @@ void setSpeedY(int x, tiroIni *tir){
     tir->speedY = x;
 }
 
-void drawBala(tiroIni *tir){
+void drawBala(tiroIni *tir, Texture2D texture2d, animation anim){
     tiroIni *l = tir;
     while(l != NULL){
-        DrawCircle(l->x, l->y, 10, YELLOW);
+        DrawTexturePro(texture2d, animation_frame(&anim, 2), {l->x-17, l->y-17, 35, 35}, {0, 0}, 0, WHITE);
         l = l->prox;
     }
 }

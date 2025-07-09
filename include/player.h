@@ -17,15 +17,27 @@ struct player{
 void updatePlayer(player *p){
     if(IsKeyDown(KEY_A)){
         p->x = p->x - p->speedX;
+        if(p->x < 20){
+            p->x = 20;
+        }
     }
     if(IsKeyDown(KEY_D)){
         p->x = p->x + p->speedX;
+        if(p->x + 20 > 480){
+            p->x = 460;
+        }
     }
     if(IsKeyDown(KEY_W)){
         p->y = p->y - p->speedY;
+        if(p->y < 16){
+            p->y = 16;
+        }
     }
     if(IsKeyDown(KEY_S)){
         p->y = p->y + p->speedY;
+        if(p->y + 20 > GetScreenHeight()){
+            p->y = GetScreenHeight() - 20;
+        }
     }
     if(IsKeyDown(KEY_J)){
         if (clock() > p->start_time + 750){
@@ -58,6 +70,6 @@ void setSpeedY(int Y, player *player){
     player->speedY = Y;
 }
 
-void drawPlayer(player *player){
-    DrawCircle(player->x, player->y, 50, GREEN);
+void drawPlayer(player *player, Texture2D texture2d, animation anim){
+    DrawTexturePro(texture2d, animation_frame(&anim, 3), {player->x-25, player->y-25, 50, 50}, {0, 0}, 0, WHITE);
 }

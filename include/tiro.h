@@ -18,7 +18,6 @@ struct tiro{
 tiro *deleteBala(tiro *tir){
     tiro *Aux = tir;
     tir = tir->prox;
-    cout << Aux << " " << tir << endl;
     delete Aux;
 
     return tir;
@@ -29,9 +28,8 @@ tiro *updateBala(tiro *tir, inimig *inim){
     while(l != NULL){
         l->x = l->x + l->speedX;
         l->y = l->y - l->speedY;
-        if(CheckCollisionCircles(Vector2 {tir->x, tir->y}, 10, Vector2{inim->x, inim->y}, 100)){
+        if(CheckCollisionCircleRec(Vector2 {tir->x, tir->y}, 10, Rectangle{inim->x, inim->y-90, 100, 400})){
             inim->vida--;
-            cout << inim->vida << endl;
             tir = deleteBala(tir);
         }
         if(l->x - 10 > GetScreenWidth()){
@@ -82,7 +80,7 @@ void setSpeedY(int x, tiro *tir){
 void drawBalaP(tiro *tir, Texture2D texture2d, animation anim){
     tiro *l = tir;
     while(l != NULL){
-        DrawTexturePro(texture2d, animation_frame(&anim, 4), {tir->x, tir->y-5, 35, 35}, {0, 0}, 0, WHITE);
+        DrawTexturePro(texture2d, animation_frame(&anim, 4), {l->x-17, l->y-17, 35, 35}, {0, 0}, 0, WHITE);
         l = l->prox;
     }
 }
