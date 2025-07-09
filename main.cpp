@@ -41,6 +41,8 @@ int main(void)
     Texture2D boss = LoadTexture("assets/boss/boss_tileset.png");
     Texture2D projetilBoss = LoadTexture("assets/boss/projetil_boss_1.png");
     Texture2D espelhoBoss = LoadTexture("assets/boss/espelho_tileset.png");
+    Texture2D coracao = LoadTexture("assets/mago/coracao_tileset.png");
+    Texture2D fundo = LoadTexture("assets/bg_tile.png");
     animation anim = (animation){
         .first = 0,
         .last = 3,
@@ -76,6 +78,13 @@ int main(void)
         .speed = 0.1,
         .duration_left = 0.7
     };
+    animation anim6 = (animation){
+        .first = 0,
+        .last = 4,
+        .cur = 0,
+        .speed = 0.1,
+        .duration_left = 0.3
+    };
     while (!WindowShouldClose())   
     {
         
@@ -89,6 +98,8 @@ int main(void)
             animation_update(&anim3);
             animation_update(&anim4);
             animation_update(&anim5);
+            animation_update(&anim6);
+
             play->tir = updateBala(play->tir, inim);
             inim->combo[inim->numCombo].tir = updateBalaINI(inim->combo[inim->numCombo].tir, play->x, play->y, &vida);
             inim = updateInimigo(inim);
@@ -141,8 +152,9 @@ int main(void)
                 }
             }else{
                 ClearBackground(BLACK);
+                DrawTexture(fundo, 0, 0, WHITE);
                 drawInimigo(inim, boss, anim3, espelhoBoss, anim5);
-                drawPlayer(play, mago, anim2);
+                drawPlayer(play, mago, anim2, coracao, &anim6, vida);
                 drawBalaP(play->tir, projetilMago, anim);
                 for(int i = 0; i<5; i++)
                     drawBala(inim->combo[i].tir, projetilBoss, anim4);
@@ -157,6 +169,8 @@ int main(void)
     UnloadTexture(boss);
     UnloadTexture(projetilBoss);
     UnloadTexture(espelhoBoss);
+    UnloadTexture(coracao);
+    UnloadTexture(fundo);
     CloseWindow();
 
     return 0;

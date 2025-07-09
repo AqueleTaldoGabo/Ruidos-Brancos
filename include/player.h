@@ -70,6 +70,11 @@ void setSpeedY(int Y, player *player){
     player->speedY = Y;
 }
 
-void drawPlayer(player *player, Texture2D texture2d, animation anim){
+void drawPlayer(player *player, Texture2D texture2d, animation anim, Texture2D coracao, animation *anim2,int vida){
     DrawTexturePro(texture2d, animation_frame(&anim, 3), {player->x-25, player->y-25, 50, 50}, {0, 0}, 0, WHITE);
+    int x = 20;
+    for(int i = 0; i<vida; i++){
+        x+=60;
+        DrawTexturePro(coracao, animation_frame(anim2, 5), {GetScreenWidth()-x, 5, 50, 50}, {0, 0}, 0, WHITE);
+    }
 }
